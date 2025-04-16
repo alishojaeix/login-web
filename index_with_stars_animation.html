@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form sabz learn</title>
+    <link rel="icon" type="image/png" href="images/high quality black and white.png">
+    <link rel="stylesheet" href="styles/app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Ensure canvas is behind the form */
+        }
+        form {
+            position: relative;
+            z-index: 1; /* Ensure form is above the canvas */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
+    <form action="#">
+        <img src="images/high quality black and white.png" alt="SabzLearn.ir" style="border-radius: 50%;">
+        <br>
+        <div>
+            <input type="text" placeholder="name and family" name="name" autofocus required>
+        </div>
+        <br>
+        <div>
+            <input type="email" placeholder="email" name="email" required>
+        </div>
+        <br>
+        <div>
+            <input type="password" placeholder=" enter password " name="password" maxlength="9" required>
+        </div>
+        <br>
+        <div>
+            <input type="password" placeholder="repeat password" name="password_confirm" maxlength="9" required>
+        </div>
+        <br>
+        <div>
+            <input type="checkbox" id="accept" name="accept_roles" required>
+            <label for="accept">I read policy website and <a href="#">alishojaei</a> accept</label>  
+        </div>
+        <br>
+        <button type="submit">submit</button>
+    </form>
+    <script>
+        // Three.js animation setup
+        const canvas = document.getElementById('bgCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = 5;
+
+        // Create star particles
+        const starsGeometry = new THREE.BufferGeometry();
+        const starCount = 1000;
+        const positions = new Float32Array(starCount * 3);
+
+        for (let i = 0; i < starCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 100; // Random positions
+        }
+
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            stars.rotation.y += 0.001; // Rotate stars for a twinkling effect
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
